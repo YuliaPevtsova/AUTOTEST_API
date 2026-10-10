@@ -1,5 +1,4 @@
-import httpx_create_file
-
+import httpx
 from tools.fakers import get_random_email
 
 create_user_payload = {
@@ -21,9 +20,17 @@ login_payload = {
 login_response = httpx.post("http://localhost:8000/api/v1/authentication/login", json=login_payload)
 login_response_data = login_response.json()
 
-get_user_headers = {"Authorization": f"Bearer {login_response_data['token']['accessToken']}"}
-get_user_response = httpx.get(f"http://localhost:8000/api/v1/users/{create_user_response_data['user']['id']}", headers=get_user_headers)
-get_user_response_data = get_user_response.json()
+create_file_headers = {
+    "Authorization": f"Bearer {login_response_data['token']['accessToken']}"
+}
+create_file_response = httpx.post(
+    "http://localhost:8000/api/v1/files",
+    data={"filename":"cat6.png", "directory": "courses"},
+    files={"upload_file": open('./testdata/files/cat6.png', 'rb')},
+    headers=create_file_headers
+)
+create_file_response_data = create_file_response.json()
+print(create_file_response_data)
 
-print(get_user_response_data)
-print(get_user_response.status_code)
+
+
