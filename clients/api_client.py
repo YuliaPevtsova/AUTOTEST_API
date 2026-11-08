@@ -1,7 +1,7 @@
-from httpx_create_file import Client, URL, QueryParams, Response
+from httpx import Client, URL, QueryParams, Response
 from typing import Any
 
-from httpx_create_file._types import RequestData, RequestFiles
+from httpx._types import RequestData, RequestFiles
 
 
 class APIClient:
